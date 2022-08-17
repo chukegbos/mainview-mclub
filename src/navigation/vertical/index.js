@@ -7,4 +7,9 @@ export default [
     route: "Home",
     icon: "FileIcon",
   },
+  // {
+  //   title: "Logout",
+  //   route: "logout",
+  //   icon: "PowerIcon",
+  // },
 ];

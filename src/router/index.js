@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 
 import Dashboard from "./dashboard";
+import Store from "@/store/index";
 
 Vue.use(VueRouter);
 
@@ -21,6 +22,7 @@ const router = new VueRouter({
       component: () => import("@/views/home/newPage.vue"),
 
       meta: {
+        requiresAuth: true,
         pageTitle: "Home",
         breadcrumb: [
           {
@@ -31,12 +33,22 @@ const router = new VueRouter({
       },
     },
 
-    // !inventory
-
     {
       path: "/login",
       name: "login",
       component: () => import("@/views/authentication/login.vue"),
+      meta: {
+        layout: "full",
+      },
+    },
+    {
+      path: "/login",
+      name: "logout",
+      component: () => import("@/views/authentication/login.vue"),
+      beforeEnter: (to, from) => {
+        localStorage.removeItem('user');
+        
+      },
       meta: {
         layout: "full",
       },
@@ -59,8 +71,16 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    let x = JSON.parse(localStorage.getItem("User") || {});
-    if (x) {
+    let x = Store.getters["Auth/authenticationStatus"];
+    let user;
+    let localUser = localStorage.getItem("user")
+if (localUser){
+   user = JSON.parse(localUser);
+}
+debugger
+    if (x || user) {
+      next();
+      return;
     } else {
       next("/login");
     }
@@ -74,7 +94,7 @@ router.beforeEach((to, from, next) => {
 router.afterEach(() => {
   // Remove initial loading
   const appLoading = document.getElementById("loading-bg");
-  // debugger;
+  // ;
   if (appLoading) {
     appLoading.style.display = "none";
   }

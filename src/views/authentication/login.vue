@@ -35,15 +35,15 @@
               <b-form-group label="Email" label-for="login-email">
                 <validation-provider
                   #default="{ errors }"
-                  name="Email"
-                  rules="required|email"
+                  name="username"
+                  rules="required"
                 >
                   <b-form-input
-                    id="login-email"
-                    v-model="userEmail"
+                    id="login-username"
+                    v-model="username"
                     :state="errors.length > 0 ? false : null"
-                    name="login-email"
-                    placeholder="john@example.com"
+                    name="login-usernme"
+                    placeholder="Enter your username"
                   />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
@@ -97,9 +97,10 @@
                   Remember Me
                 </b-form-checkbox>
               </b-form-group>
-
+              
               <!-- submit buttons -->
               <b-button
+                v-if="!isLoading"
                 type="submit"
                 variant="primary"
                 block
@@ -107,6 +108,16 @@
               >
                 Sign in
               </b-button>
+              <b-button
+                v-else
+                type="button"
+                variant="primary"
+                block
+                @click="validationForm"
+              >
+                <b-spinner small label="Small Spinner" variant="white"></b-spinner>
+              </b-button>
+              
             </b-form>
           </validation-observer>
 
@@ -162,6 +173,7 @@ import {
   BImg,
   BForm,
   BButton,
+  BSpinner,
 } from "bootstrap-vue";
 import { required, email } from "@validations";
 import { togglePasswordVisibility } from "@core/mixins/ui/forms";
@@ -183,6 +195,7 @@ export default {
     BImg,
     BForm,
     BButton,
+    BSpinner,
     VuexyLogo,
     ValidationProvider,
     ValidationObserver,
@@ -191,12 +204,13 @@ export default {
   data() {
     return {
       status: "",
-      password: "1234",
-      userEmail: "ejesunday2@gmail.com",
+      password: "gK1UlGV7",
+      username: "avikky.code",
       sideImg: require("@/assets/images/pages/login-v2.svg"),
       // validation rulesimport store from '@/store/index'
       required,
       email,
+      isLoading:false
     };
   },
   computed: {
@@ -218,14 +232,16 @@ export default {
       this.$refs.loginValidation.validate().then((success) => {
         let query = new FormData();
         let dis = this;
-        query.append("email", dis.userEmail);
+        query.append("username", dis.username);
         query.append("password", dis.password);
         if (success) {
           let dis = this;
+          dis.isLoading = true;
           this.$store
             .dispatch("Auth/LOGIN", { query })
             .then((resp) => {
-              if (resp) {
+              dis.isLoading = false;
+              if (!resp.data) {
                 this.$toast({
                   component: ToastificationContent,
                   props: {
@@ -235,7 +251,8 @@ export default {
                   },
                 });
                 return false;
-              } else {
+              }
+             
                 this.text = "Login Successful";
                 this.$toast({
                   component: ToastificationContent,
@@ -246,11 +263,12 @@ export default {
                     variant: "success",
                   },
                 });
-
+                this.$router.push({ name: "Home" });
                 return true;
-              }
+              
             })
             .catch((err) => {
+              dis.isLoading = false;
               console.log(err);
               this.$toast({
                 component: ToastificationContent,
@@ -261,8 +279,7 @@ export default {
                 },
               });
             });
-
-          this.$router.push("/");
+        
         }
       });
     },

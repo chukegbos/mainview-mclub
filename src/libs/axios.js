@@ -17,7 +17,8 @@ axios.defaults.headers.common["Authorization"] = `Bearer ${
 const axiosIns = axios.create({
   // You can add your headers here
   // ================================
-  baseURL:"http://127.0.0.1:8000/api" || process.env.VUE_APP_ROOT_API,
+  //baseURL:"http://127.0.0.1:8000/api" || process.env.VUE_APP_ROOT_API,
+  baseURL:"https://club247-api.herokuapp.com/api" || process.env.VUE_APP_ROOT_API,
   withCredentials: false, // Check cross-site Access-Control
   // timeout: 1000,
 });

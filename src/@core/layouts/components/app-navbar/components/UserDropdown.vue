@@ -7,23 +7,22 @@
     <template #button-content>
       <div class="d-sm-flex d-none user-nav">
         <p class="user-name font-weight-bolder mb-0">
-          {{ userData.fullName || userData.username }}
+          {{ userData.data?userData.data.name:'' || userData.data?userData.data.username:'' }}
         </p>
-        <span class="user-status">{{ userData.role }}</span>
+        <!-- <span class="user-status">{{ userData.role }}</span> -->
       </div>
       <b-avatar
         size="40"
-        :src="userData.avatar"
+        :src="userData.data?userData.data.avatar:''"
         variant="light-primary"
         badge
         class="badge-minimal"
         badge-variant="success"
       >
-        <feather-icon
-          v-if="!userData.fullName"
-          icon="UserIcon"
-          size="22"
-        />
+      <feather-icon
+        v-if="!userData.data.avatar"
+        size="22"
+      />
       </b-avatar>
     </template>
 
@@ -137,25 +136,35 @@ export default {
   },
   data() {
     return {
-      userData: JSON.parse(localStorage.getItem('userData')),
+     
       avatarText,
     }
+  },
+  computed:{
+     userData(){
+        let user;
+        let localUser = localStorage.getItem("user")
+        if (localUser){
+          user = JSON.parse(localUser);
+        }
+        return user || {}
+     }
   },
   methods: {
     logout() {
       // Remove userData from localStorage
       // ? You just removed token from localStorage. If you like, you can also make API call to backend to blacklist used token
-      localStorage.removeItem(useJwt.jwtConfig.storageTokenKeyName)
-      localStorage.removeItem(useJwt.jwtConfig.storageRefreshTokenKeyName)
+      // localStorage.removeItem(useJwt.jwtConfig.storageTokenKeyName)
+      // localStorage.removeItem(useJwt.jwtConfig.storageRefreshTokenKeyName)
 
       // Remove userData from localStorage
-      localStorage.removeItem('userData')
+      localStorage.removeItem('user')
+      this.$router.push({ name: 'login' })
 
       // Reset ability
-      this.$ability.update(initialAbility)
+      // this.$ability.update(initialAbility)
 
       // Redirect to login page
-      this.$router.push({ name: 'auth-login' })
     },
   },
 }

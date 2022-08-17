@@ -39,12 +39,16 @@
     </b-col>
 
     <!-- Content Right -->
+    
     <b-col
       class="content-header-right text-md-right d-md-block d-none mb-1"
       md="3"
       cols="12"
     >
-      <b-dropdown
+    
+      <back-button></back-button>
+
+      <!-- <b-dropdown
         variant="link"
         no-caret
         toggle-class="p-0"
@@ -92,7 +96,7 @@
           />
           <span class="align-middle ml-50">Calendar</span>
         </b-dropdown-item>
-      </b-dropdown>
+      </b-dropdown> -->
     </b-col>
   </b-row>
 </template>
@@ -102,6 +106,7 @@ import {
   BBreadcrumb, BBreadcrumbItem, BRow, BCol, BDropdown, BDropdownItem, BButton,
 } from 'bootstrap-vue'
 import Ripple from 'vue-ripple-directive'
+import BackButton from "@core/components/back-button/BackButton.vue"
 
 export default {
   directives: {
@@ -115,6 +120,7 @@ export default {
     BDropdown,
     BDropdownItem,
     BButton,
+    BackButton,
   },
 }
 </script>

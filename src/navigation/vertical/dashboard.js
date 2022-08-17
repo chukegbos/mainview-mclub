@@ -4,8 +4,6 @@ export default [
     icon: "HomeIcon",
 
     tagVariant: "light-warning",
-
-    title: "eCommerce",
-    route: "dashboard-ecommerce",
+    route: "dashboard",
   },
 ];

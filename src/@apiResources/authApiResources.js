@@ -1,10 +1,10 @@
 /*eslint-disable*/
 export function login(payload) {
-  return apiWorker.post(`/auth/login`, payload.query);
+  return apiWorker.post(`/login`, payload.query);
 }
 export function refreshToken() {
-  return apiWorker.post(`/auth/refresh`);
+  return apiWorker.post(`/refresh`);
 }
 export function logout() {
-  return apiWorker.post(`/auth/logout`);
+  return apiWorker.post(`/logout`);
 }

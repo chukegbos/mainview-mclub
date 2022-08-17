@@ -5,8 +5,11 @@ export default [
   //   component: () => import("@/views/dashboard/analytics/Analytics.vue"),
   // },
   {
-    path: "/dashboard/",
-    name: "dashboard-ecommerce",
+    path: "/dashboard",
+    name: "dashboard",
     component: () => import("@/views/dashboard/newPage.vue"),
+    meta: {
+      requiresAuth: true,
+    },
   },
 ];

@@ -6,22 +6,38 @@ export default {
   namespaced: true,
   state: {
     token: localStorage.getItem("token") || "",
+    isAuthenticated: false,
   },
-  mutations: {},
+  mutations: {
+    mIsAuthenticated(state, payload) {
+      state.isAuthenticated = payload;
+    },
+  },
   actions: {
     LOGIN({ commit }, payload) {
-      setTimeout(() => {
-        return new Promise((resolve) => {
-          localStorage.setItem("user", JSON.stringify(payload));
-          resolve(payload);
+     
+      commit("mIsAuthenticated", true);
+        return new Promise((resolve, reject) => {
+          login(payload).then(res =>{
+            if(res.data){
+              localStorage.setItem("user", JSON.stringify(res.data));
+              resolve(res)
+            }
+            
+          })
+          .catch(err=>{
+            reject(err);
+          });
+         
         });
-      }, 1000);
     },
 
     // !LOGOUT
     LOGOUT({ commit }) {
       logout()
-        .then((resp) => {})
+        .then((resp) => {
+          
+        })
         .catch((err) => {
           console.log(err);
         });
@@ -34,5 +50,9 @@ export default {
         });
     },
   },
-  getters: {},
+  getters: {
+    authenticationStatus(state) {
+      return state.isAuthenticated;
+    },
+  },
 };

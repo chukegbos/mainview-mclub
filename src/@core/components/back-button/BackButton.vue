@@ -1,6 +1,7 @@
 <template>
 <!-- Back Button for accessing previous page -->
-    <div class="container-div"
+<div>
+    <!-- <div class="container-div"
         v-if="showButton"
     >
         <button 
@@ -13,6 +14,7 @@
             />
             GO BACK
         </button>
+    </div> -->
     </div>
 </template>
 

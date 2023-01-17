@@ -23,15 +23,55 @@ const router = new VueRouter({
 
       meta: {
         requiresAuth: true,
-        pageTitle: "Home",
-        breadcrumb: [
-          {
-            text: "This is home",
-            active: true,
-          },
-        ],
+        pageTitle: "Dashboard",
+       
       },
     },
+
+    {
+      path: "/members",
+      name: "members",
+      component: () => import("@/views/pages/members.vue"),
+      meta: {
+        requiresAuth: true,
+      },
+    },
+
+    {
+      path: "/members/create",
+      name: "enroll",
+      component: () => import("@/views/pages/enroll.vue"),
+      meta: {
+        requiresAuth: true,
+      },
+    },
+
+    {
+      path: "/members/:member_id",
+      name: "members",
+      component: () => import("@/views/pages/memberview.vue"),
+      meta: {
+        requiresAuth: true,
+      },
+    },
+
+    {
+      path: "/sections",
+      name: "sections",
+      component: () => import("@/views/pages/sections.vue"),
+      meta: {
+        requiresAuth: true,
+      },
+    },
+
+
+
+
+
+
+
+
+
 
     {
       path: "/login",
@@ -74,10 +114,10 @@ router.beforeEach((to, from, next) => {
     let x = Store.getters["Auth/authenticationStatus"];
     let user;
     let localUser = localStorage.getItem("user")
-if (localUser){
-   user = JSON.parse(localUser);
-}
-debugger
+    if (localUser){
+      user = JSON.parse(localUser);
+    }
+
     if (x || user) {
       next();
       return;

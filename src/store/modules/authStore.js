@@ -1,7 +1,7 @@
 /*eslint-disable*/
 import { login, logout, refreshToken } from "@/@apiResources/authApiResources";
 // import Vue from "vue";
-import axios from "axios";
+
 export default {
   namespaced: true,
   state: {

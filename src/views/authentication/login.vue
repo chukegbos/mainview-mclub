@@ -1,19 +1,18 @@
 <template>
-  <div class="auth-wrapper auth-v2 container">
-    <b-row class="auth-inner m-0">
+  <div class="container">
+    <div class="row mt-4">
         <div class="col-md-4"></div>
         <div class="col-md-4">
-          
           <div class="card">
             <div class="card-body">
               <b-img fluid :src="imgUrl" alt="Login V2" class="center" />
-              <b-card-text class="mb-2 text-center">
-                Welcome, login to you account to proceed;
+              <b-card-text class="my-2 text-center">
+                Welcome, login to you school to proceed;
               </b-card-text>
 
               <!-- form -->
               <validation-observer ref="loginValidation">
-                <b-form class="auth-login-form mt-2" @submit.prevent>
+                <b-form class="auth-login-form my-2" @submit.prevent>
                   <!-- email -->
                   <b-form-group label="Username" label-for="login-email">
                     <validation-provider
@@ -34,7 +33,7 @@
 
                   <!-- forgot password -->
                   <b-form-group>
-                    <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-between mt-2">
                       <label for="login-password">Password</label>
                       <b-link :to="{ name: 'auth-forgot-password-v2' }">
                         <small>Forgot Password?</small>
@@ -85,7 +84,7 @@
                   <b-button
                     v-if="!isLoading"
                     type="submit"
-                    variant="primary"
+                    variant="danger"
                     block
                     @click="validationForm"
                   >
@@ -94,7 +93,7 @@
                   <b-button
                     v-else
                     type="button"
-                    variant="primary"
+                    variant="warning"
                     block
                     @click="validationForm"
                   >
@@ -106,7 +105,7 @@
             </div>
           </div>
         </div>
-    </b-row>
+    </div>
   </div>
 </template>
 
@@ -207,13 +206,13 @@ export default {
                 });
                 return false;
               }
-             
+                this.$forceUpdate();
                 this.text = "Login Successful";
                 this.$toast({
                   component: ToastificationContent,
                   props: {
                     title: `Voila`,
-                    text: `User login successfull`,
+                    text: `You are logged in successfull`,
                     icon: "HomeIcon",
                     variant: "success",
                   },

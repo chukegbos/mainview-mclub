@@ -1,24 +1,20 @@
 import Vue from "vue";
-
-// axios
 import axios from "axios";
 
 let token;
-let x = localStorage.getItem("token");
-token = x ? JSON.parse(x) : null;
-axios.defaults.headers.post["Content-Type"] =
-  "application/x-www-form-urlencoded";
-axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
+let user;
 
-axios.defaults.headers.common["Authorization"] = `Bearer ${
-  token ? token.tok : ""
-}`;
+let item = localStorage.getItem("user");
+
+user = item ? JSON.parse(item) : null;
+token = user ? user.data.token : null;
+
+axios.defaults.baseURL = 'http://127.0.0.1:8000/api'
+axios.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
+axios.defaults.headers.common["Authorization"] = `Bearer ${token ? token : ""}`;
 
 const axiosIns = axios.create({
-  // You can add your headers here
-  // ================================
-  //baseURL:"http://127.0.0.1:8000/api" || process.env.VUE_APP_ROOT_API,
-  baseURL:"https://club247-api.herokuapp.com/api" || process.env.VUE_APP_ROOT_API,
   withCredentials: false, // Check cross-site Access-Control
   // timeout: 1000,
 });

@@ -1,39 +1,28 @@
 <template>
 <div>
   <div class="header mb-3">
-    <h3>This a sample table</h3>
+    <h3>Dashboar</h3>
   </div>
-  <div>
-    <div>
-      <b-card title="Table Header" sub-title="Table subtitle">
-           <b-card-text>
-             <b-table striped hover :items="items"></b-table>
-              </b-card-text>
-      </b-card>
-    </div>
-  </div>
-
 </div>
 </template>
 
 <script>
-import {
-  BRow,
-  BCol,
-  BLink,
-  BCardText,
-  BCardTitle,
-  BImg,
-  BCard,
-  BForm,
-  BButton,
-  BTable,
-} from "bootstrap-vue";
-export default {
-  components: {
-    BTable,
-    BCard,
-  },
+  export default {
+    components: {
+      BTable,
+      BCard,
+    },
+
+    mounted() {
+      if (localStorage.getItem('reloaded')) {
+      } 
+      else {
+          // Set a flag so that we know not to reload the page twice.
+          localStorage.setItem('reloaded', '1');
+          location.reload();
+      }
+    },
+
     data() {
       return {
         items: [
@@ -44,7 +33,8 @@ export default {
         ]
       }
     }
-};
+  };
 </script>
 
-<style></style>
+<style>
+</style>
